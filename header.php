@@ -20,8 +20,8 @@ if (function_exists('bloginfo')) $wp = true;
 <script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
 
 <!-- Thex.Tech -->
-<script src="https://thex.tech/wp-content/themes/thextech/thextech.js"></script>
-<link rel="stylesheet" href="https://thex.tech/wp-content/themes/thextech/thextech.css" />
+<script src="https://thex.tech/wp-content/themes/thex.tech/thextech.js"></script>
+<link rel="stylesheet" href="https://thex.tech/wp-content/themes/thex.tech/thextech.css" />
 
 <!-- Wordpress -->
 <?php if ($wp) wp_head(); ?>
