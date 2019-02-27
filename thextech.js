@@ -18,6 +18,7 @@ var lowFPSThreshold = 30; // If FPS dips below this change matrix ease multiplie
 var lowFPSTime = 2; // The amount of time spent below lowFPSThreshold before switching
 var ultraLowFPSTime = 5; // If the FPS has been below lowFPSThreshold this long we will disable the matrix
 var lowFPSMatrixEaseMultiplier = 16; // This will be used when FPS is below lowFPSThreshold
+var benchmarkDuration = 6; // How long to perform a benchmark for (this need to be higher than ultraLowFPSTime)
 var disableMatrix = false;
 
 // Matrix varitions:
@@ -44,7 +45,11 @@ function tt_mainLoop() {
 }
 
 var tt_timeLowFPS = 0
+var tt_timeBenchmarking = 0;
+var doBenchmark = true;
 function matrix_benchmark() {
+  if (doBenchmark == false) return;
+  tt_timeBenchmarking++;
   if (tt_fps < lowFPSThreshold) {
     tt_timeLowFPS++;
     if (tt_timeLowFPS >= lowFPSTime) {
@@ -53,10 +58,15 @@ function matrix_benchmark() {
     if (tt_timeLowFPS >= ultraLowFPSTime) {
       disableMatrix = true;
       $("#matrix").hide('slow');
+      clearInterval(matrixIntId);
     }
+  }
+  if (tt_timeBenchmarking >= benchmarkDuration) {
+    doBenchmark = false;
   }
 }
 
+let matrixIntId;
 function beginMatrix() {
   var s = window.screen;
   var width = q.width = $(window).width();
@@ -79,7 +89,7 @@ function beginMatrix() {
       letters[index] = (y_pos > 758 + Math.random() * 1e4) ? 0 : y_pos + 10;
     });
   };
-  setInterval(draw, matrixInterval);
+  matrixIntId = setInterval(draw, matrixInterval);
 }
 
 function initDebugText() {
@@ -94,6 +104,7 @@ function initDebugText() {
 const tt_bm_times = [];
 let tt_fps;
 function tt_benchmarkLoop() {
+  if (doBenchmark == false) return;
   window.requestAnimationFrame(() => {
     const now = performance.now();
     while (tt_bm_times.length > 0 && tt_bm_times[0] <= now - 1000) {
@@ -105,4 +116,28 @@ function tt_benchmarkLoop() {
   });
 }
 
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 $(document).ready(function() { initThexTech(); });
+

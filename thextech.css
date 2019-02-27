@@ -20,16 +20,17 @@
       font-family: 'VT323', monospace;
       font-size: 1.3em;
     }
-    a:hover {
-      color: #000;
+    a:hover, .woocommerce-loop-product__title:hover {
       background-color: #17e2eb;
     }
-    a:active {
-      color: #f9047b;
-    }
-    a {
+    a:active, .woocommerce-loop-product__title:active {
       color: #17e2eb;
+      background-color: #f9047b;
+    }
+    a, .woocommerce-loop-product__title {
+      color: #f9047b;
       text-decoration: none;
+      text-shadow: 0 0 10px #f9047b;
     }
     button, .button, select, textarea {
       background-color: #f9047b !important;
@@ -65,10 +66,10 @@
     }
     #tvbody {
       position: absolute;
-      width: 80vw;
-      height: 80vh;
-      left: 10vw;
-      top: 10vh;
+      width: 90vw;
+      height: 95vh;
+      left: 5vw;
+      top: 5vh;
       margin: auto;
     }
     #tvframe {
@@ -109,3 +110,39 @@
     .simplebar-scrollbar:before {
       background: #f9047b;
     } 
+    .simplebar-scroll-content {
+	    box-sizing: content-box;
+    }
+    .menu-main-container {
+   	-moz-column-count: 2;
+	-moz-column-gap: 50px;
+	-webkit-column-count: 2;
+	-webkit-column-gap: 50px;
+	column-count: 2;
+	column-gap: 50px;
+        -moz-column-rule: 1px solid #000;
+        -webkit-column-rule: 1px solid #000;
+        column-rule: 1px solid #000;
+	padding:0 5px;
+        width: 50vw;
+        margin: 0 auto;
+    }
+    .menu-item {
+	font-size: 2em;
+        white-space: nowrap;
+    }
+    .menu-main-container ul{
+        margin:0;
+        padding:0 0  0 2em;
+        list-style:none;
+    }
+    @media screen and (max-width:760px){
+	.columns {
+	-moz-column-count: 1;
+	-moz-column-gap: 0;
+	-webkit-column-count:1;
+	-webkit-column-gap:0;
+	column-count: 1;
+	column-gap: 0px;
+	}	
+}
